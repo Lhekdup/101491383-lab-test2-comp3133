@@ -1,0 +1,22 @@
+.character-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+.character-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.character-card img {
+  height: 300px;
+  object-fit: cover;
+}
+
+mat-card-actions {
+  margin-top: auto;
+}

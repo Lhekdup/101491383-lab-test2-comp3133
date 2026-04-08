@@ -1,0 +1,34 @@
+<div class="details-container" *ngIf="character">
+  
+  <button mat-stroked-button color="primary" routerLink="/">← Back to List</button>
+
+  <mat-card class="details-card">
+    <mat-card-header>
+      <mat-card-title>{{ character.name }}</mat-card-title>
+      <mat-card-subtitle>House: {{ character.house || 'None' }}</mat-card-subtitle>
+    </mat-card-header>
+
+    <img mat-card-image [src]="character.image || 'https://via.placeholder.com/400x500?text=No+Image'" [alt]="character.name">
+
+    <mat-card-content>
+      <mat-list>
+        <mat-list-item><strong>Actor:</strong> {{ character.actor || 'N/A' }}</mat-list-item>
+        <mat-list-item><strong>Wizard:</strong> {{ character.wizard ? 'true' : 'false' }}</mat-list-item>
+        <mat-list-item><strong>Species:</strong> {{ character.species || 'N/A' }}</mat-list-item>
+        <mat-list-item><strong>Ancestry:</strong> {{ character.ancestry || 'N/A' }}</mat-list-item>
+        
+        <ng-container *ngIf="character.wand?.wood">
+          <mat-divider></mat-divider>
+          <h3 style="margin-top: 15px;">Wand Details</h3>
+          <mat-list-item><strong>Wand Wood:</strong> {{ character.wand?.wood }}</mat-list-item>
+          <mat-list-item><strong>Wand Core:</strong> {{ character.wand?.core }}</mat-list-item>
+          <mat-list-item><strong>Wand Length:</strong> {{ character.wand?.length || 'Unknown' }}</mat-list-item>
+        </ng-container>
+      </mat-list>
+    </mat-card-content>
+  </mat-card>
+</div>
+
+<div *ngIf="!character" style="padding: 20px;">
+  <h2>Loading character details...</h2>
+</div>
