@@ -11,3 +11,17 @@ This Angular application fetches and displays Harry Potter character data using 
 2. Run `npm install` to install the required dependencies.
 3. Run `ng serve` to start the development server.
 4. Open your browser and navigate to `http://localhost:4200/`.
+
+## Application Screenshots
+
+**Main Character List View:**
+![Character List](screenshots/main.png)
+
+**Filtering by House View:**
+![House Filter View](screenshots/filter.png)
+
+**Character Detail View:**
+![Character Detail](screenshots/details.png)
+
+**Running App:**
+![Running App](screenshots/runningApp.png)
