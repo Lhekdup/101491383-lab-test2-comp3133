@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
@@ -14,14 +14,14 @@ import { Character } from '../../models/character.model';
   styleUrl: './characterlist.component.css'
 })
 export class CharacterlistComponent implements OnInit {
-  characters: Character[] = [];
+  characters = signal<Character[]>([]);
 
   constructor(private hpService: HarryPotterService) {}
 
   ngOnInit(): void {
     this.hpService.getAllCharacters().subscribe({
       next: (data) => {
-        this.characters = data.slice(0, 20); 
+        this.characters.set(data.slice(0, 20)); 
       },
       error: (err) => console.error('Error fetching characters:', err)
     });

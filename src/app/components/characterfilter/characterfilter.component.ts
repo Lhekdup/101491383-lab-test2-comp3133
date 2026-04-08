@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms'; // Required for two-way binding
+import { ReactiveFormsModule, FormControl } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatCardModule } from '@angular/material/card';
@@ -12,7 +12,7 @@ import { Character } from '../../models/character.model';
   standalone: true,
   imports: [
     CommonModule, 
-    FormsModule, 
+    ReactiveFormsModule,
     MatSelectModule, 
     MatFormFieldModule, 
     MatCardModule
@@ -20,21 +20,22 @@ import { Character } from '../../models/character.model';
   templateUrl: './characterfilter.component.html',
   styleUrl: './characterfilter.component.css'
 })
-export class CharacterfilterComponent {
+export class CharacterfilterComponent implements OnInit {
   houses: string[] = ['Gryffindor', 'Slytherin', 'Hufflepuff', 'Ravenclaw'];
-  selectedHouse: string = '';
-  filteredCharacters: Character[] = [];
+  
+  houseControl = new FormControl(''); 
+  filteredCharacters = signal<Character[]>([]);
 
   constructor(private hpService: HarryPotterService) {}
 
-  onHouseSelect(): void {
-    if (this.selectedHouse) {
-      this.hpService.getCharactersByHouse(this.selectedHouse).subscribe({
-        next: (data) => {
-          this.filteredCharacters = data;
-        },
-        error: (err) => console.error('Error fetching filtered characters:', err)
-      });
-    }
+  ngOnInit(): void {
+    this.houseControl.valueChanges.subscribe(selectedHouse => {
+      if (selectedHouse) {
+        this.hpService.getCharactersByHouse(selectedHouse).subscribe({
+          next: (data) => this.filteredCharacters.set(data),
+          error: (err) => console.error(err)
+        });
+      }
+    });
   }
 }
